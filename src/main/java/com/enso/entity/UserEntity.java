@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,7 +24,7 @@ public class UserEntity extends BaseEntity {
     private String fullName;
 
     @Column(nullable = false, unique = true, length = 20)
-    private String mobile;
+    private String mobileNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

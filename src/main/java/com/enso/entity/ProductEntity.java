@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -45,21 +45,21 @@ public class ProductEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    private CategoryEntity categoryEntity;
+    private CategoryEntity category;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @Builder.Default
     private List<ProductImageEntity> images = new ArrayList<>();
 
+    /*Keeping both sides of a bidirectional relationship in sync*/
+    public void addImage(ProductImageEntity image) {
+        images.add(image);
+        image.setProduct(this);
+    }
 
-public void addImage(ProductImageEntity image) {
-    images.add(image);
-    image.setProductEntity(this);
-}
-
-public void removeImage(ProductImageEntity image) {
-    images.remove(image);
-    image.setProductEntity(null);
-}
+    public void removeImage(ProductImageEntity image) {
+        images.remove(image);
+        image.setProduct(null);
+    }
 }
 

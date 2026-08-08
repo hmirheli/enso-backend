@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "product_image")
+@Table(name = "product_images")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,7 +32,6 @@ public class ProductImageEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
-    private ProductEntity productEntity;
-
+    private ProductEntity product;
 
 }

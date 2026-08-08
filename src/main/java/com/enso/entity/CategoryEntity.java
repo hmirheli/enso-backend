@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "category")
+@Table(name = "categories")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,11 +38,11 @@ public class CategoryEntity extends BaseEntity {
 
     public void addProduct(ProductEntity productEntity) {
         productEntities.add(productEntity);
-        productEntity.setCategoryEntity(this);
+        productEntity.setCategory(this);
     }
 
     public void removeProduct(ProductEntity productEntity) {
         productEntities.remove(productEntity);
-        productEntity.setCategoryEntity(null);
+        productEntity.setCategory(null);
     }
 }

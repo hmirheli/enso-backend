@@ -6,7 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "order_item")
+@Table(name = "order_items")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,11 +20,11 @@ public class OrderItemEntity extends BaseEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
-    private OrderEntity orderEntity;
+    private OrderEntity order;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    private ProductEntity productEntity;
+    private ProductEntity product;
 
     @Column(nullable = false)
     private String productName;

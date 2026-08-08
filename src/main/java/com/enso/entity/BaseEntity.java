@@ -22,4 +22,7 @@ public abstract class BaseEntity {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(nullable = false)
+    private Boolean deleted = false;
+
 }

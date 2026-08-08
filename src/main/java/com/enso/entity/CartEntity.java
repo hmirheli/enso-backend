@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "cart")
+@Table(name = "carts")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class CartEntity extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private UserEntity userEntity;
+    private UserEntity user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
@@ -29,11 +29,11 @@ public class CartEntity extends BaseEntity {
 
     public void addItem(CartItemEntity item) {
         items.add(item);
-        item.setCartEntity(this);
+        item.setCart(this);
     }
 
     public void removeItem(CartItemEntity item) {
         items.remove(item);
-        item.setCartEntity(null);
+        item.setCart(null);
     }
 }

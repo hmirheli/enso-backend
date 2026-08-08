@@ -6,7 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "cart_item", uniqueConstraints = {
+@Table(name = "cart_items", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"cart_id", "product_id"})
 })
 @Getter
@@ -22,11 +22,11 @@ public class CartItemEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false)
-    private CartEntity cartEntity;
+    private CartEntity cart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
-    private ProductEntity productEntity;
+    private ProductEntity product;
 
     @Column(nullable = false)
     private Integer quantity;

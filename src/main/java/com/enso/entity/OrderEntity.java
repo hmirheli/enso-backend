@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,11 +23,11 @@ public class OrderEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity userEntity;
+    private UserEntity user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<OrderItemEntity> orderItemEntities = new ArrayList<>();
+    private List<OrderItemEntity> orderItems = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -51,12 +51,12 @@ public class OrderEntity extends BaseEntity {
     private String trackingCode;
 
     public void addOrderItem(OrderItemEntity item) {
-        orderItemEntities.add(item);
-        item.setOrderEntity(this);
+        orderItems.add(item);
+        item.setOrder(this);
     }
 
     public void removeOrderItem(OrderItemEntity item) {
-        orderItemEntities.remove(item);
-        item.setOrderEntity(null);
+        orderItems.remove(item);
+        item.setOrder(null);
     }
 }
