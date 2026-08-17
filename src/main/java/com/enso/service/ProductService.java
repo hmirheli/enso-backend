@@ -5,6 +5,7 @@ import com.enso.dto.response.ProductResponse;
 import com.enso.entity.CategoryEntity;
 import com.enso.entity.ProductEntity;
 import com.enso.entity.ProductImageEntity;
+import com.enso.exception.DuplicateResourceException;
 import com.enso.exception.ResourceNotFoundException;
 import com.enso.mapper.ProductMapper;
 import com.enso.repository.CategoryRepository;
@@ -96,8 +97,13 @@ public class ProductService {
         CategoryEntity category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Category", request.getCategoryId()));
 
+        String slug = slugUtil.normalize(request.getSlug());
+        if (productRepository.existsBySlugAndIdNot(slug, id)) {
+            throw new DuplicateResourceException("Product with slug " + slug + " already exists");
+        }
+
         productEntity.setName(request.getName());
-        productEntity.setSlug(slugUtil.normalize(request.getSlug()));
+        productEntity.setSlug(slug);
         productEntity.setDescription(request.getDescription());
         productEntity.setPrice(request.getPrice());
         productEntity.setStock(request.getStock());

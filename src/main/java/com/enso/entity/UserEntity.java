@@ -20,7 +20,7 @@ public class UserEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 150)
+    @Column(length = 150)
     private String fullName;
 
     @Column(nullable = false, unique = true, length = 20)

@@ -14,6 +14,8 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     Optional<ProductEntity> findBySlugAndDeletedFalse(String slug);
 
+    boolean existsBySlugAndIdNot(String slug, Long id);
+
     List<ProductEntity> findByDeletedFalse();
 
     List<ProductEntity> findByCategory_Name(String categoryName);
