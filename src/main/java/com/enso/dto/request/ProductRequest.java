@@ -29,6 +29,7 @@ public class ProductRequest {
     private BigDecimal price;
 
     @NotNull(message = "Category is required")
+    @Positive(message = "Category ID must be positive")
     private Long categoryId;
 
     @NotNull(message = "Stock is required")

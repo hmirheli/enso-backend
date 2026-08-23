@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.CONFLICT)
 public class DuplicateResourceException extends RuntimeException {
-    public DuplicateResourceException(String message) {
-        super(message);
+    public DuplicateResourceException(String resource) {
+        super(resource);
     }
 
-    public DuplicateResourceException(String message, Throwable cause) {
-        super(message, cause);
+    public DuplicateResourceException(String resource, String field, Object value) {
+        super(resource + " already exists with " + field + ": " + value);
     }
 }
