@@ -38,6 +38,7 @@ public class ProductService {
         return productMapper.toProductResponse(findActiveProductById(id));
     }
 
+    @Transactional(readOnly = true)
     public ProductResponse getProductBySlug(String slug) {
         return productMapper.toProductResponse(
                 productRepository.findBySlugAndDeletedFalse(slug)
