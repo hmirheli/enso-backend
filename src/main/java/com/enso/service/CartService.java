@@ -121,4 +121,11 @@ public class CartService {
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Cart item", productId));
     }
+
+    public CartEntity getCartEntity(UserEntity userEntity) {
+        return cartRepository.findByUser(userEntity)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Cart not found for user")
+                );
+    }
 }
