@@ -21,6 +21,7 @@ public interface CartMapper {
     @Mapping(source = "product.id", target = "productId")
     @Mapping(source = "product.name", target = "productName")
     @Mapping(source = "product.category.name", target = "productCategory")
+    @Mapping(source = "product.stock", target = "stock")
     @Mapping(target = "subtotal", expression = "java(cartItem.getSubtotal())")
     @Mapping(target = "imageUrl", expression = "java(getFirstImageUrl(cartItem))")
     CartItemResponse toCartItemResponce(CartItemEntity cartItem);
@@ -37,6 +38,6 @@ public interface CartMapper {
         if (item.getProduct().getImages() == null || item.getProduct().getImages().isEmpty()) {
             return null;
         }
-        return item.getProduct().getImages().get(0).getImageUrl();
+        return item.getProduct().getImages().getFirst().getImageUrl();
     }
 }
