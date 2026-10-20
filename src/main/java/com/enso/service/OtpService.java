@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.Duration;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -15,17 +16,26 @@ public class OtpService {
 
     private static final int OTP_LENGTH = 6;
     private static final Duration OTP_TTL = Duration.ofMinutes(5);
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+
     private final RedisService redisService;
+    private final SmsService smsService;
 
-    public String generateAndStoreOtp(String phone) {
-        String otp = String.format("%0" + OTP_LENGTH + "d", new SecureRandom().nextInt(1000000));
+    public void generateAndStoreOtp(String phone) {
+        String otp = String.format(Locale.ROOT,
+                "%0" + OTP_LENGTH + "d",
+                SECURE_RANDOM.nextInt(1_000_000));
+
         String key = "otp:" + phone;
-
         redisService.save(key, otp, OTP_TTL);
 
-        log.info("Mock OTP for {}: {}", phone, otp);
-
-        return otp;
+        try {
+            smsService.sendOtp(phone, otp);
+        } catch (RuntimeException exception) {
+            // کدی که پیامکش ارسال نشده نباید قابل تأیید باقی بماند.
+            redisService.delete(key);
+            throw exception;
+        }
     }
 
     public void validateOtp(String phone, String otp) {

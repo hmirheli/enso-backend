@@ -33,12 +33,15 @@ public class AuthService {
                     .mobileNumber(request.getPhone())
                     .role(Role.ROLE_USER)
                     .build();
+
             UserEntity savedUserEntity = userRepository.save(newUserEntity);
             CartEntity cartEntity = CartEntity.builder().user(savedUserEntity).build();
             cartRepository.save(cartEntity);
             log.info("Registered new user with phone: {}", request.getPhone());
         }
-        return otpService.generateAndStoreOtp(request.getPhone());
+        otpService.generateAndStoreOtp(request.getPhone());
+
+        return "Otp sent";
     }
 
     @Transactional(readOnly = true)

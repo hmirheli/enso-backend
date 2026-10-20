@@ -3,6 +3,7 @@ package com.enso.config;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.client.JdkClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
@@ -18,6 +19,7 @@ import java.security.KeyStore;
 public class RestClientConfig {
 
     @Bean
+    @Primary
     public RestClient restClient(TrustStoreProps props) throws Exception {
         KeyStore trustStore = KeyStore.getInstance("PKCS12");
 
@@ -42,6 +44,13 @@ public class RestClientConfig {
 
         return RestClient.builder()
                 .requestFactory(requestFactory)
+                .build();
+    }
+
+    @Bean("kavenegarRestClient")
+    public RestClient kavenegarRestClient(RestClient.Builder builder) {
+        return builder
+                .baseUrl("https://api.kavenegar.com")
                 .build();
     }
 }
