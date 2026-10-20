@@ -48,6 +48,7 @@ public class ProductEntity extends BaseEntity {
     private CategoryEntity category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderBy("primaryImage DESC, displayOrder ASC, id ASC")
     @Builder.Default
     private List<ProductImageEntity> images = new ArrayList<>();
 
@@ -55,11 +56,6 @@ public class ProductEntity extends BaseEntity {
     public void addImage(ProductImageEntity image) {
         images.add(image);
         image.setProduct(this);
-    }
-
-    public void removeImage(ProductImageEntity image) {
-        images.remove(image);
-        image.setProduct(null);
     }
 }
 

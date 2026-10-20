@@ -22,6 +22,6 @@ public interface ProductMapper {
     @Named("mapImages")
     default List<String> mapImages(List<ProductImageEntity> images) {
         if (images == null) return Collections.emptyList();
-        return images.stream().map(ProductImageEntity::toString).collect(Collectors.toList());
+        return images.stream().map(ProductImageEntity::getImageUrl).collect(Collectors.toList());
     }
 }

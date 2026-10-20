@@ -7,9 +7,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -60,6 +62,14 @@ public class ProductController {
             @PathVariable Long id,
             @Valid @RequestBody ProductRequest request) {
         return ResponseEntity.ok(productService.updateProduct(id, request));
+    }
+
+    @Operation(summary = "Upload product image")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping(value = "/{id}/images", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ProductResponse> uploadProductImage(@PathVariable Long id,
+                                                              @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.ok(productService.addProductImage(id, file));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
