@@ -1,7 +1,7 @@
 package com.enso.dto.request;
 
+import com.enso.validation.IranianMobile;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -11,10 +11,7 @@ public class OrderRequest {
     private String recipientName;
 
     @NotBlank(message = "Recipient mobile is required")
-    @Pattern(
-            regexp = "^09\\d{9}$",
-            message = "Invalid Iranian mobile number"
-    )
+    @IranianMobile
     private String recipientMobile;
 
     @NotBlank(message = "Shipping address is required")

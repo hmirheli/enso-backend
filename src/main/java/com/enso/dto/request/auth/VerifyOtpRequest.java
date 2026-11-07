@@ -1,5 +1,6 @@
 package com.enso.dto.request.auth;
 
+import com.enso.validation.IranianMobile;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -8,10 +9,7 @@ import lombok.Data;
 public class VerifyOtpRequest {
 
     @NotBlank(message = "Phone number is required")
-    @Pattern(
-            regexp = "^09\\d{9}$",
-            message = "Invalid Iranian mobile number"
-    )
+    @IranianMobile
     private String phone;
 
     @NotBlank(message = "OTP is required")
